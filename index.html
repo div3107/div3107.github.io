@@ -91,7 +91,6 @@
             outline: none;
         }
 
-        /* Ensure dropdown options are visible in both themes */
         select option {
             background: var(--bg-color);
             color: var(--text-color);
@@ -311,8 +310,11 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body data-theme="dark">
+    <!-- Vulnerability 4: Hidden Flag in Comment -->
+    <!-- flag{Y0r'er_C3rtifi3d_Chill_Guy} -->
+
     <audio id="bgm">
-        <source src="https://github.com/div3107/Chill-guy/raw/refs/heads/main/just-a-chill-guy-made-with-Voicemod.mp3" type="audio/mpeg">
+        <source src="https://www.youtube.com/watch?v=dQw4w9WgXcQ" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
@@ -450,7 +452,7 @@
 
         // Calculate Result
         function calculateResult() {
-            const age = parseInt(document.getElementById('age').value, 10);
+            const age = document.getElementById('age').value;
             const weekend = document.getElementById('weekend').value;
             const badNews = document.getElementById('badNews').value;
             const vacation = document.getElementById('vacation').value;
@@ -473,6 +475,9 @@
                 return;
             }
 
+            // Vulnerability : XSS (Cross-Site Scripting)
+            result.innerHTML = `Your age is: ${age}`; // Vulnerable to XSS
+
             let chillScore = 0;
 
             // Scoring logic
@@ -490,9 +495,14 @@
             const auraPercentage = (chillScore / 10) * 100;
             auraFill.style.width = `${auraPercentage}%`;
 
+            // Vulnerability : Local Storage Tampering
+            localStorage.setItem('chillScore', chillScore);
+
+            }
+
             // Result logic
             if (age > 18 && chillScore >= 7) {
-                result.textContent = 'Congrats! You are a Chill Guy!';
+                result.innerHTML += '<br>Congrats! You are a Chill Guy!';
                 result.classList.remove('hidden');
                 auraMeter.classList.remove('hidden');
 
@@ -505,11 +515,11 @@
                     colors: ['#FFD700', '#4caf50', '#ff0000']
                 });
             } else if (age > 12) {
-                result.textContent = 'You are a Normal Guy.';
+                result.innerHTML += '<br>You are a Normal Guy.';
                 result.classList.remove('hidden');
                 auraMeter.classList.remove('hidden');
             } else {
-                result.textContent = 'You are a Kid! Keep growing!';
+                result.innerHTML += '<br>You are a Kid! Keep growing!';
                 result.classList.remove('hidden');
                 auraMeter.classList.remove('hidden');
             }
