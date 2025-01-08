@@ -484,8 +484,8 @@
                 return;
             }
 
-            // Vulnerability: XSS (Cross-Site Scripting)
-            result.innerHTML = `Your age is: ${age}`; // Vulnerable to XSS
+            // 
+            result.innerHTML = `Your age is: ${age}`; // 
 
             let chillScore = 0;
 
@@ -504,7 +504,7 @@
             const auraPercentage = (chillScore / 10) * 100;
             auraFill.style.width = `${auraPercentage}%`;
 
-            // Vulnerability: Local Storage Tampering
+            // 
             localStorage.setItem('chillScore', chillScore);
 
             }
