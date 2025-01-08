@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chill Guy Aura Calculator</title>
-    <!-- Favicon for the title -->
-    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/en/c/c7/Chill_guy_original_artwork.jpg" type="image/jpg">
     <style>
         /* General Styles */
         :root {
@@ -93,6 +91,7 @@
             outline: none;
         }
 
+        /* Ensure dropdown options are visible in both themes */
         select option {
             background: var(--bg-color);
             color: var(--text-color);
@@ -312,20 +311,10 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body data-theme="dark">
-    <!-- Hidden Flag in Comment -->
-    <!-- flag{Y0r'er_C3rtifi3d_Chill_Guy} -->
-
-    <!-- Audio BGM -->
     <audio id="bgm">
         <source src="https://github.com/div3107/Chill-guy/raw/refs/heads/main/just-a-chill-guy-made-with-Voicemod.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-
-    <!-- Fun Activity: Commented YouTube URL -->
-    <!-- <audio id="bgm">
-        <source src="https://www.youtube.com/watch?v=dQw4w9WgXcQ" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio> -->
 
     <!-- Dark Mode Toggle Button -->
     <span id="darkmode" role="button" tabIndex="0" onClick="changeMode()" onKeyDown="changeMode()">
@@ -461,7 +450,7 @@
 
         // Calculate Result
         function calculateResult() {
-            const age = document.getElementById('age').value;
+            const age = parseInt(document.getElementById('age').value, 10);
             const weekend = document.getElementById('weekend').value;
             const badNews = document.getElementById('badNews').value;
             const vacation = document.getElementById('vacation').value;
@@ -484,9 +473,6 @@
                 return;
             }
 
-            // 
-            result.innerHTML = `Your age is: ${age}`; // 
-
             let chillScore = 0;
 
             // Scoring logic
@@ -504,14 +490,9 @@
             const auraPercentage = (chillScore / 10) * 100;
             auraFill.style.width = `${auraPercentage}%`;
 
-            // 
-            localStorage.setItem('chillScore', chillScore);
-
-            }
-
             // Result logic
             if (age > 18 && chillScore >= 7) {
-                result.innerHTML += '<br>Congrats! You are a Chill Guy!';
+                result.textContent = 'Congrats! You are a Chill Guy!';
                 result.classList.remove('hidden');
                 auraMeter.classList.remove('hidden');
 
@@ -524,11 +505,11 @@
                     colors: ['#FFD700', '#4caf50', '#ff0000']
                 });
             } else if (age > 12) {
-                result.innerHTML += '<br>You are a Normal Guy.';
+                result.textContent = 'You are a Normal Guy.';
                 result.classList.remove('hidden');
                 auraMeter.classList.remove('hidden');
             } else {
-                result.innerHTML += '<br>You are a Kid! Keep growing!';
+                result.textContent = 'You are a Kid! Keep growing!';
                 result.classList.remove('hidden');
                 auraMeter.classList.remove('hidden');
             }
