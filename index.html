@@ -15,28 +15,33 @@
             --input-bg: rgba(255, 255, 255, 0.1);
             --input-border: #444;
             --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            --header: #4a4e69;
+            --background: #f4f3f2;
+            --page-color-transition: background .2s ease, color .2s ease;
         }
 
-        [data-theme="light"] {
-            --bg-color: #f4f4f4;
-            --text-color: #333;
+        [data-theme="dark"] {
+            --bg-color: #11112a;
+            --text-color: #f4f3f2;
             --primary-color: #ff6f61;
             --secondary-color: #4caf50;
-            --content-bg: rgba(255, 255, 255, 0.9);
-            --input-bg: rgba(0, 0, 0, 0.1);
+            --content-bg: rgba(255, 255, 255, 0.1);
+            --input-bg: rgba(0, 0, 0, 0.2);
             --input-border: #ccc;
             --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --header: #c9ada7;
+            --background: #11112a;
         }
 
         body {
             font-family: 'Arial', sans-serif;
-            background: var(--bg-color);
+            background: var(--background);
             color: var(--text-color);
             text-align: center;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            transition: background 0.5s ease, color 0.5s ease;
+            transition: var(--page-color-transition);
         }
 
         h1 {
@@ -55,8 +60,8 @@
             border-radius: 15px;
             box-shadow: var(--box-shadow);
             backdrop-filter: blur(10px);
-            transition: background 0.5s ease, box-shadow 0.5s ease;
-            text-align: left; /* Left-align content inside the container */
+            transition: var(--page-color-transition);
+            text-align: left;
         }
 
         label {
@@ -64,7 +69,7 @@
             margin: 15px 0 5px;
             font-size: 1.1rem;
             color: var(--primary-color);
-            text-align: left; /* Left-align labels */
+            text-align: left;
         }
 
         input[type="text"], select {
@@ -77,7 +82,7 @@
             color: var(--text-color);
             font-size: 1rem;
             transition: border-color 0.3s ease, background 0.3s ease;
-            text-align: left; /* Left-align input text */
+            text-align: left;
         }
 
         input[type="text"]:focus, select:focus {
@@ -86,7 +91,6 @@
             outline: none;
         }
 
-        /* Ensure dropdown options are visible in both themes */
         select option {
             background: var(--content-bg);
             color: var(--text-color);
@@ -118,7 +122,7 @@
             font-size: 1.2rem;
             color: var(--primary-color);
             animation: fadeIn 0.5s ease;
-            text-align: left; /* Left-align result text */
+            text-align: left;
         }
 
         @keyframes fadeIn {
@@ -164,8 +168,8 @@
             text-align: center;
             font-size: 0.9rem;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
             gap: 5px;
         }
 
@@ -188,36 +192,119 @@
             transform: rotate(360deg);
         }
 
-        .theme-toggle {
+        .stats {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        /* Dark Mode Toggle Button */
+        #darkmode {
+            padding: 0.3em 0.5em;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
             position: fixed;
             top: 20px;
             right: 20px;
-            background: var(--secondary-color);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: background 0.3s ease, transform 0.2s ease;
+            transform: scale(1.5);
+            z-index: 1000;
         }
 
-        .theme-toggle:hover {
-            background: #45a049;
-            transform: scale(1.1);
-        }
-
-        .theme-toggle:active {
-            transform: scale(0.9);
-        }
-
-        .theme-toggle img {
+        .darkmode_icon {
+            position: absolute;
             width: 20px;
             height: 20px;
-            filter: invert(1);
+            border-radius: 10px;
+            background: var(--header);
+            transform-origin: center center;
+            transition: transform 0.75s ease-in-out, var(--page-color-transition);
+        }
+
+        .darkmode_icon::after {
+            position: absolute;
+            content: '';
+            width: 16px;
+            height: 16px;
+            left: 8px;
+            bottom: 4px;
+            border-radius: 10px;
+            background: var(--background);
+            transform-origin: center center;
+            transition: transform 0.5s ease, left 0.25s ease, bottom 0.25s ease, var(--page-color-transition);
+        }
+
+        .darkmode_icon .ray {
+            position: absolute;
+            left: 7px;
+            top: 7px;
+            width: 6px;
+            height: 6px;
+            border-radius: 6px;
+            background: var(--header);
+            transform-origin: center;
+            transition: transform 0.5s ease-in-out, var(--page-color-transition);
+        }
+
+        .ray:nth-child(1) {
+            transform: rotate(45deg) translateX(0);
+        }
+        .ray:nth-child(2) {
+            transform: rotate(90deg) translateX(0);
+        }
+        .ray:nth-child(3) {
+            transform: rotate(135deg) translateX(0);
+        }
+        .ray:nth-child(4) {
+            transform: rotate(180deg) translateX(0);
+        }
+        .ray:nth-child(5) {
+            transform: rotate(225deg) translateX(0);
+        }
+        .ray:nth-child(6) {
+            transform: rotate(270deg) translateX(0);
+        }
+        .ray:nth-child(7) {
+            transform: rotate(315deg) translateX(0);
+        }
+        .ray:nth-child(8) {
+            transform: rotate(360deg) translateX(0);
+        }
+
+        [data-theme="dark"] .darkmode_icon {
+            transform: scale(0.6);
+        }
+        [data-theme="dark"] .darkmode_icon::after {
+            left: 15px;
+            bottom: 8px;
+            transform: scale(0);
+        }
+        [data-theme="dark"] .ray:nth-child(1) {
+            transform: rotate(45deg) translateX(-16px);
+        }
+        [data-theme="dark"] .ray:nth-child(2) {
+            transform: rotate(90deg) translateX(-16px);
+        }
+        [data-theme="dark"] .ray:nth-child(3) {
+            transform: rotate(135deg) translateX(-16px);
+        }
+        [data-theme="dark"] .ray:nth-child(4) {
+            transform: rotate(180deg) translateX(-16px);
+        }
+        [data-theme="dark"] .ray:nth-child(5) {
+            transform: rotate(225deg) translateX(-16px);
+        }
+        [data-theme="dark"] .ray:nth-child(6) {
+            transform: rotate(270deg) translateX(-16px);
+        }
+        [data-theme="dark"] .ray:nth-child(7) {
+            transform: rotate(315deg) translateX(-16px);
+        }
+        [data-theme="dark"] .ray:nth-child(8) {
+            transform: rotate(360deg) translateX(-16px);
         }
     </style>
     <!-- Include canvas-confetti library -->
@@ -229,10 +316,19 @@
         Your browser does not support the audio element.
     </audio>
 
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" onclick="toggleTheme()">
-        <img id="theme-icon" src="https://www.svgrepo.com/show/309493/dark-mode.svg" alt="Theme Toggle">
-    </button>
+    <!-- Dark Mode Toggle Button -->
+    <span id="darkmode" role="button" tabIndex="0" onClick="changeMode()" onKeyDown="changeMode()">
+        <div class="darkmode_icon">
+            <span class="ray"></span>
+            <span class="ray"></span>
+            <span class="ray"></span>
+            <span class="ray"></span>
+            <span class="ray"></span>
+            <span class="ray"></span>
+            <span class="ray"></span>
+            <span class="ray"></span>
+        </div>
+    </span>
 
     <h1>Chill Guy Aura Calculator</h1>
     <div class="content">
@@ -334,6 +430,11 @@
     </div>
 
     <footer>
+        <div class="stats">
+            <p>Visitors: <span id="visitors">0</span></p>
+            <p>Total Attempts: <span id="totalAttempts">0</span></p>
+            <p>Total Chill Guys: <span id="totalChillGuys">0</span></p>
+        </div>
         Designed by a Chill guy | 
         <a href="https://github.com/div3107" class="github-link" target="_blank">
             <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Icon" class="github-icon">
@@ -343,19 +444,30 @@
 
     <script>
         // Theme Toggle
-        const themeIcon = document.getElementById('theme-icon');
-        const body = document.body;
+        const body = document.querySelector("body");
+        body.dataset.theme = "light";
 
-        function toggleTheme() {
-            const currentTheme = body.getAttribute('data-theme');
-            if (currentTheme === 'light') {
-                body.setAttribute('data-theme', 'dark');
-                themeIcon.src = 'https://www.svgrepo.com/show/309493/dark-mode.svg'; // Moon icon
+        function changeMode() {
+            if (body.dataset.theme === "light") {
+                body.dataset.theme = "dark";
             } else {
-                body.setAttribute('data-theme', 'light');
-                themeIcon.src = 'https://www.svgrepo.com/show/309492/light-mode.svg'; // Sun icon
+                body.dataset.theme = "light";
             }
         }
+
+        // Track Visitors, Attempts, and Chill Guys
+        let visitors = localStorage.getItem('visitors') || 0;
+        let totalAttempts = localStorage.getItem('totalAttempts') || 0;
+        let totalChillGuys = localStorage.getItem('totalChillGuys') || 0;
+
+        // Increment visitors on page load
+        visitors++;
+        localStorage.setItem('visitors', visitors);
+
+        // Update stats in the DOM
+        document.getElementById('visitors').textContent = visitors;
+        document.getElementById('totalAttempts').textContent = totalAttempts;
+        document.getElementById('totalChillGuys').textContent = totalChillGuys;
 
         // Calculate Result
         function calculateResult() {
@@ -399,11 +511,21 @@
             const auraPercentage = (chillScore / 10) * 100;
             auraFill.style.width = `${auraPercentage}%`;
 
+            // Increment total attempts
+            totalAttempts++;
+            localStorage.setItem('totalAttempts', totalAttempts);
+            document.getElementById('totalAttempts').textContent = totalAttempts;
+
             // Result logic
             if (age > 18 && chillScore >= 7) {
                 result.textContent = 'Congrats! You are a Chill Guy!';
                 result.classList.remove('hidden');
                 auraMeter.classList.remove('hidden');
+
+                // Increment total chill guys
+                totalChillGuys++;
+                localStorage.setItem('totalChillGuys', totalChillGuys);
+                document.getElementById('totalChillGuys').textContent = totalChillGuys;
 
                 // Play BGM and trigger confetti
                 bgm.play();
